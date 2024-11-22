@@ -37,3 +37,27 @@ for(let i=1; i<=15; i++){
     }
     console.log(`Value of i is ${i}`)
 }
+
+//While loop
+console.log('') //new-line
+console.log('While loop...')
+let i = 0;
+while(i<=10){
+    console.log(`Value of i is ${i}`)
+    i = i + 2
+}
+
+const ARR = [2,3,4,5]
+let index = 0
+while(index < ARR.length){
+    console.log(ARR[index])
+    index++;
+}
+
+
+//do-while loops
+let score = 11
+do{
+    console.log(`value printed for score is ${score}`)
+    score++
+}while(score <= 10)

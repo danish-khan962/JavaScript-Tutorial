@@ -25,6 +25,8 @@
             justify-content: center;
             align-items: center;
             gap: 2.5rem;
+            padding: 2rem;
+            text-align: center;
         }
         .ColorButtons{
             display: flex;
@@ -45,6 +47,13 @@
         #SkyBlue{background-color: #00BFFF;}
         #yellow{background-color: #FFFF00;}
         #green{background-color: #008000;}
+        @media screen and (max-width: 600px){
+            .ColorButtons{
+                display: grid;
+                grid-template-columns: repeat(2,1fr);
+                grid-template-rows: repeat(2,1fr);
+            }
+        }
     </style>
 </head>
 

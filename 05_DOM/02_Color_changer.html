@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1 | Background Color Switcher</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'sans-serif';
+        }
+        Html, body {
+            Height:100vh;
+            Width:100vw;
+            Overflow-x: hidden
+        }
+        .wrapper{
+            display: flex;
+            height: 95vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .ColorButtons{
+            display: flex;
+            gap: 1rem;
+        }
+        .button{
+            padding: 4rem;
+            background-color: #212121;
+            width: 10%;
+            border: 2px solid black;
+            border-radius: 12px;
+        }
+        .button:hover{
+            transform: translateY(-3px);
+            box-shadow: 1px 1px 24px #212121;
+        }
+        #red{background-color: #FF0000;}
+        #SkyBlue{background-color: #00BFFF;}
+        #yellow{background-color: #FFFF00;}
+        #green{background-color: #008000;}
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class="heading">Color Scheme Switcher</h1>
+        <div class="ColorButtons">
+            <div class="button" id="red"></div>
+            <div class="button" id="SkyBlue"></div>
+            <div class="button" id="yellow"></div>
+            <div class="button" id="green"></div>
+        </div>
+        <h2>Try clicking on one of the colors above to change the background color of this page !!</h2>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.button')
+        const body = document.querySelector("body")
+
+        buttons.forEach( (button) => {
+            button.addEventListener('click', (event) => {
+                if(event.target.id === 'red'){
+                    body.style.backgroundColor = event.target.id //which is red itself
+                }
+                if(event.target.id === 'SkyBlue'){
+                    body.style.backgroundColor = '#00BFFF'
+                }
+                if(event.target.id === 'yellow'){
+                    body.style.backgroundColor = event.target.id //which is yellow itself
+                }
+                if(event.target.id === 'green'){
+                    body.style.backgroundColor = event.target.id //which is green itself
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

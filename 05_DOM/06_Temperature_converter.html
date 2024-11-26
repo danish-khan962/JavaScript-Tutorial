@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 5 | Temperature Converter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'sans-serif';
+        }
+        Html, body{
+            height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            background-color: #212121;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .wrapper{
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            border: none;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            background: linear-gradient( to top left, #8E0E00 ,#1F1C18);
+            box-shadow: 1px 1px 24px red;
+        }
+        .container{
+            display: flex;
+            flex-direction: row;
+            gap: 2.5rem;
+            border: 1px solid white;
+            padding: 2rem;
+            border-radius: 7px;
+            background: linear-gradient(#870000,#190A05);
+        }
+        .box1, .box2{
+            display: flex;
+            flex-direction: column;
+        }
+        #celsius, #fahrenheit, span{
+            padding: 0.6rem 1.5rem;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+        }
+        input{
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Temperature Converter</h1>
+        <div class="container">
+            <div class="box1">
+                <input type="text" id="celsius" value="0">
+                <label for="celsius">Degree Celsius</label>
+            </div>
+            <span>=</span>
+            <div class="box2">
+                <input type="text" id="fahrenheit" value="32">
+                <label for="fahrenheit">Fahrenheit</label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let degreeCelsius = document.querySelector('#celsius');
+        let fahrenheit = document.querySelector('#fahrenheit');
+
+        degreeCelsius.addEventListener('input', (cel) => {
+            cel = parseInt(degreeCelsius.value);
+            let fah = (cel * 9/5)+32;
+            fahrenheit.value = fah.toFixed(2);
+        })
+        fahrenheit.addEventListener('input', (fah) => {
+            fah = parseInt(fahrenheit.value);
+            let cel = (fah - 32)*(5/9);
+            degreeCelsius.value = cel.toFixed(2);
+        })
+    </script>
+</body>
+</html>

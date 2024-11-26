@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 | JavaScript Events</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'sans-serif';
+        }
+
+        Html,
+        body {
+            Height: 100vh;
+            Width: 100vw;
+            Overflow-x: hidden;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+        }
+        a{
+            color: red;
+        }
+        #images{
+            display: grid;
+            grid-template-columns: repeat(5,1fr);
+            grid-template-rows: repeat(2,1fr);
+        }
+    </style>
+</head>
+
+<body>
+    <h2>AMAZING IMAGES</h2>
+    <div>
+        <ul id="images">
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/707837/pexels-photo-707837.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="dice" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/2518136/pexels-photo-2518136.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="camera" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/29408341/pexels-photo-29408341/free-photo-of-tranquil-autumn-sunrise-in-latvian-countryside.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+                    id="autumn" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/735423/pexels-photo-735423.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="cat" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/1023953/pexels-photo-1023953.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="blossom" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="japan" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/457882/pexels-photo-457882.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="beach" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="ocean" alt=""></li>
+            <li><img width="300px"
+                    src="https://images.pexels.com/photos/459451/pexels-photo-459451.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    id="rain" alt=""></li>
+            <li><img width="300px" src="https://images.pexels.com/photos/810357/pexels-photo-810357.jpeg?auto=compress&cs=tinysrgb&w=600" id="car" alt=""></li>
+            <li><a href="https://github.com" id="Github">https://github.com</a></li>
+        </ul>
+    </div>
+
+    <script>
+       document.getElementById('camera').addEventListener('click', () => {
+        alert('Clicked on Camera image..')
+       })
+
+    //some important basic event listeners
+    //type, timeStamp, preventDefault
+    //target, toElement, srcElement, currentTarget,
+    //clientX, clientY, screenX, screenY
+    //altkey, ctrlkey, shiftkey, keyCode,....
+
+
+    /*EVENT PROPOGATION*/
+    /*Event Bubbling and Event Capturing*/
+
+    //(1) Event Bubbling (false):- //false by default (bottom to top)
+    /*document.getElementById('images').addEventListener( (event) => {
+        console.log('Inside the ul id=*images*')
+    }, false)
+    document.getElementById('autumn').addEventListener( (event) => {
+        console.log('Clicked on autumn !!')
+    }, false)*/
+
+    //(2) Event Capturing (true):- (top to bottom)
+    /*document.getElementById('images').addEventListener( (event) => {
+        console.log('Inside the ul id=*images*')
+    }, true)
+    document.getElementById('autumn').addEventListener( (event) => {
+        console.log('Clicked on autumn !!')
+    }, true)*/
+
+    //stopPropagation() // stops bubbling of event propagation
+
+    //Stopping default direction of link
+    document.getElementById('Github').addEventListener('click', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        console.log('Clicked on github link....')
+    })
+
+    //deleting an image by clicking on it
+    document.querySelector('#images').addEventListener('click', (event) => {
+        console.log(event.target.tagName);
+        if(event.target.tagName === 'IMG'){
+            let RemoveIt = event.target.parentNode;
+            RemoveIt.remove();
+        }
+    })
+    </script>
+</body>
+
+</html>

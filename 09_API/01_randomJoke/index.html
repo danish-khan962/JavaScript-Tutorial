@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Joke Generator</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        HTML, body{
+            height: 100vh;
+            width: 100vw;
+        }
+        .wrapper{
+            background: linear-gradient(#fffbd5,#b20a2c);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0rem 1rem;
+        }
+        .JokeCard{
+            background: linear-gradient(#0f0c29,#302b63,#24243e);
+            padding: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 550px;
+        }
+        .button-div{
+            justify-content: center;
+            align-items: center;
+        }
+        #button{
+            padding: 0.5rem 1.3rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 17px;
+            background: linear-gradient(#74ebd5,#ACB6E5);
+            cursor: pointer;
+        }
+        #joke{
+            color: #fff;
+            font-size: 17px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="wrapper">
+        <div class="JokeCard">
+            <img src="qfHre227.gif">
+            <p id="joke"></p>
+            <div class="button-div">
+                <button id="button">Generate Joke</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let button = document.querySelector('#button');
+        let joke = document.querySelector('#joke')
+        const url = 'https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single';
+
+        let getJoke = () =>{
+            fetch(url)
+            .then(response => response.json())
+            .then(data =>{
+                joke.textContent = `${data.joke}`;
+            })
+        }
+        button.addEventListener("click",getJoke);
+        getJoke();
+    </script>
+
+</body>
+</html>

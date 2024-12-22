@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        HTML, body{
+            height: 100vh;
+            width: 100vw;
+        }
+        .wrapper{
+            height: 100vh;
+            background: linear-gradient(#373B44,#4286f4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .countryCard{
+            background: linear-gradient(#FFEFBA,#FFFFFF);
+            padding: 2rem;
+            border: none;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .input{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .input input{
+            border: none;
+            width: 60%;
+            outline: none;
+            text-transform: uppercase;
+            font-size: 21px;
+            background-color: #fff5d6;
+        }
+        .input input::placeholder{
+            text-transform: capitalize;
+            font-size: 15px;
+        }
+        #search{
+            border: none;
+            background-color: #fff;
+            font-size: 19px;
+            background-color: #478eff;
+            color: #fff;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+        }
+        #search:hover{
+            background-color: #000;
+        }
+        .result{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 19px;
+            gap: 0.5rem;
+        }
+        .flag{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .flag img{
+            width: 80%;
+            border: none;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+        span{
+            margin-left: 0.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="countryCard">
+            <div class="input">
+                <input type="text" placeholder="Enter country name.." id="inpCountry">
+                <button id="search">Search</button>
+            </div>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        let searchButton = document.querySelector('#search');
+
+        const url = "https://restcountries.com/v3.1/all";
+
+        searchButton.addEventListener("click", () => {
+            let inpCountry = document.querySelector('#inpCountry').value.toLowerCase();
+            console.log(inpCountry);
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                let result = document.querySelector('.result');
+                let countryFound = false;
+
+                data.forEach(country => {
+                    let countryName = country.name.common.toLowerCase();
+                    if (countryName === inpCountry) {
+                        countryFound = true;
+                        result.innerHTML = `
+                            <div class="flag">
+                                <img src="${country.flags.png}" alt="${country.name.common} flag">
+                            </div>
+                            <p id="name">Name: <span>${country.name.common}</span></p>
+                            <p id="full_name">Full name: <span>${country.name.official}</span></p>
+                            <p id="capital">Capital: <span>${country.capital ? country.capital[0] : 'N/A'}</span></p>
+                            <p id="population">Population: <span>${country.population.toLocaleString()}</span></p>
+                            <p id="currency">Currency: <span>${country.currencies ? Object.values(country.currencies)[0].name : 'N/A'}</span></p>
+                        `;
+                    }
+                });
+
+                if (!countryFound) {
+                    result.innerHTML = `<p>Country not found. Please check the name and try again.</p>`;
+                }
+            })
+        });
+    </script>
+</body>
+</html>

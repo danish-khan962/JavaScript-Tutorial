@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rubik', sans-serif;
+        }
+        HTML, body{
+            height: 100vh;
+            width: 100vw;
+        }
+        .wrapper{
+            height: 100vh;
+            background: linear-gradient(#ad5389,#3c1053);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .dict{
+            background-color: #fff;
+            max-width: 450px;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 1px 1px 16px black;
+        }
+        .result{
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .input{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .input input{
+            border: none;
+            outline: none;
+            width: 60%;
+            font-size: 21px;
+            text-transform: uppercase;
+            color: #006aff;
+        }
+        .input input::placeholder{
+            font-size: 18px;
+            text-transform: none;
+            color: grey;
+        }
+        .word{
+            margin-top: 2.5rem;
+            display: flex;
+            font-size: 30px;
+            font-weight: 600;
+            align-items: center;
+            justify-content: space-between;
+        }
+        button{
+            border: none;
+            background-color: #fff;
+            font-size: 19px;
+        }
+        #search{
+            background-color: #000;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+        .abbrevation{
+            font-size: 15px;
+            color: grey;
+        }
+        #define{
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="dict">
+            <div class="input">
+                <input type="text" placeholder="Enter word to search here..." id="input">
+                <button id="search">Search</button>
+            </div>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        let searchButton = document.getElementById('search');
+        let inputWord = document.querySelector("#inputWord");
+        let abbrv = document.getElementsByClassName('abbrevation');
+        let define = document.querySelector('#define');
+        let result = document.querySelector('.result');
+
+        //API url
+        const url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+
+        searchButton.addEventListener("click", ()=>{
+            let input = document.getElementById('input').value;
+            fetch(`${url}${input}`)
+            .then(response=> response.json())
+            .then(data=>{
+                console.log(data);
+                result.innerHTML= `
+                <div class="word">
+                <p id="inputWord">${input}</p>
+                <button id="sound" onclick="soundPlay()"><i class="fa-solid fa-volume-high"></i></button>
+            </div>
+            <div class="abbrevation">${data[0].phonetic}</div>
+
+            <p id="define">${data[0].meanings[0].definitions[0].definition}</p>`
+            sound.setAttribute("src", `${data[0].phonetics[1].audio}`)
+            console.log(sound);
+            })
+        })
+        function soundPlay(){
+            sound.play();
+        }    
+    </script>
+</body>
+</html>

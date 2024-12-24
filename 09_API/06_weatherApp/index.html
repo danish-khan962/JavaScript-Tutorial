@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        HTML,
+        body {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .wrapper {
+            height: 100vh;
+            width: 100vw;
+            background-color: #11114c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .weatherCard {
+            background-color: #fff;
+            max-width: 400px;
+            width: 100%;
+            ;
+            padding: 1.5rem;
+            border: none;
+            border-radius: 12px;
+        }
+
+        .searchBox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.4rem;
+        }
+
+        #input {
+            border: none;
+            outline: none;
+            font-size: 21px;
+            text-transform: uppercase;
+            width: 60%;
+        }
+
+        #input::placeholder {
+            font-size: 16px;
+            text-transform: capitalize;
+        }
+
+        i {
+            font-size: 20px;
+        }
+
+        #search {
+            background-color: #d5ffff;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 30px;
+        }
+
+        #search:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        #pic {
+            width: 65%;
+            height: auto;
+        }
+
+        .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .temp {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-side {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #left,
+        #right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #left>i,
+        #right>i {
+            font-size: 28px;
+        }
+
+        .value {
+            font-size: 19px;
+            font-weight: 600;
+        }
+
+        .title {
+            font-size: 15px;
+        }
+
+        h2 {
+            font-size: 32px;
+        }
+
+        #weather {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        #error-message{
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="weatherCard">
+            <div class="searchBox">
+                <i class="fa-solid fa-location-dot"></i>
+                <input type="text" placeholder="Enter your location" id="input">
+                <i class="fa-solid fa-magnifying-glass" id="search"></i>
+            </div>
+
+            <div class="result">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let searchButton = document.getElementById('search');
+        let temp = document.getElementById('temp');
+        let weather = document.getElementById('weather');
+
+        let humidityValue = document.querySelector('#humidityValue');
+        let windSpeed = document.querySelector('#windSpeed');
+
+        let result = document.querySelector('.result');
+
+        searchButton.addEventListener("click", () => {
+            let APIkey = "3211f4cb094841a292b24155242412";
+            const location = document.querySelector('#input').value;
+            console.log(location);
+
+            const url = `http://api.weatherapi.com/v1/current.json?key=${APIkey}&q=${location}&aqi=no`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    result.innerHTML = `
+                <div class="image">
+                    <img src="" id="pic">
+                </div>
+                <div class="temp">
+                    <h2 id="temp">${data.current.temp_c} °C</h2>
+                    <p id="weather">${data.current.condition.text}</p>
+                </div>
+
+                <div class="footer-side">
+                    <div id="left">
+                        <i class="fa-solid fa-water"></i>
+                        <div class="block">
+                            <p class="value" id="humidityValue">${data.current.humidity}%</p>
+                            <p class="title">Humidity</p>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <i class="fa-solid fa-wind"></i>
+                        <div class="block">
+                            <p class="value" id="windSpeed">${data.current.wind_kph}Km/h</p>
+                            <p class="title">Wind speed</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+
+                let pic = document.getElementById('pic');
+                    switch (data.current.condition.text) {
+                        case 'Sunny':
+                        case 'Clear':
+                            pic.src = 'images/clear.png';
+                            break;
+                        case 'Rain':
+                        case 'Rain Nearby':
+                        case 'Patchy rain nearby':
+                        case 'Patchy rain possible':
+                        case 'Light rain':
+                        case 'Moderate rain at times':
+                        case 'Heavy rain':
+                        case 'Light freezing rain':
+                        case 'Moderate or heavy freezing rain':
+                        case 'Light sleet':
+                        case 'Moderate or heavy sleet':
+                        case 'Ice pellets':
+                        case 'Light rain shower':
+                        case 'Moderate or heavy rain shower':
+                        case 'Torrential rain shower':
+                        case 'Moderate or heavy sleet showers':
+                        case 'Light sleet showers':
+                        case 'Light snow showers':
+                        case 'Moderate or heavy snow showers':
+                        case 'Light showers of ice pellets':
+                        case 'Moderate or heavy showers of ice pellets':
+                        case 'Patchy light rain with thunder':
+                        case 'Moderate or heavy rain with thunder':
+                            pic.src = 'images/rain.png';
+                            break;
+
+
+                        case 'Snow':
+                        case 'Patchy snow possible':
+                        case 'Light snow':
+                        case 'Moderate snow':
+                        case 'Heavy snow':
+                        case 'Light snow showers':
+                        case 'Moderate or heavy snow showers':
+                        case 'Patchy moderate snow':
+                        case 'Patchy heavy snow':
+                        case 'Snow with thunder':
+                        case 'Light snow with thunder':
+                        case 'Moderate or heavy snow with thunder':
+                            pic.src = 'images/snow.png';
+                            break;
+
+                        case 'Mist':
+                        case 'Fog':
+                        case 'Freezing fog':
+                            pic.src = 'images/mist.png';
+                            break;
+                        
+                        case 'Cloudy':
+                        case 'Partly Cloudy':
+                        case 'Overcast':
+                            pic.src = 'images/cloud.png';
+                            break;
+                        
+                        default: 
+                        pic.src = 'images/404.png';
+                    }
+                })
+                .catch(error=>{
+                    console.log("No such location found!! Error");
+                    result.innerHTML = `
+                    <div class="image">
+                        <img src="images/404.png" id="pic">
+                    </div>
+                    <p id="error-message">Oops! Something went wrong. Try to search a valid location :/</p>
+                    `
+                })
+        })
+    </script>
+</body>
+
+</html>

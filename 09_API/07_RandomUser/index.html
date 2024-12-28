@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        HTML,
+        body {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .wrapper {
+            background: linear-gradient(#0F2027, #203A43, #2C5364);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: #000;
+            color: #fff;
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            border-radius: 15px;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: flex;
+            justify-content: space-between;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        #button {
+            border: none;
+            background-color: #a40f0f;
+            color: #fff;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            font-size: 17px;
+        }
+
+        i {
+            font-size: 17px;
+            background-color: #560494;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 25px;
+        }
+        .result {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            font-size: 19px;
+        }
+        span{
+            font-weight: 500;
+        }
+        #image{
+            height: 8rem;
+            border-radius: 40px;
+        }
+        #img-div{
+            display: flex;
+            justify-content:center ;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="result"></div>
+            <div class="btn">
+                <button id="button">Generate Random User</button>
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let button = document.getElementById('button');
+        const url = "https://randomuser.me/api/";
+        let result = document.querySelector('.result');
+
+        button.addEventListener("click",()=>{
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    result.innerHTML = `
+                    <div id="img-div"><img src="${data.results[0].picture.thumbnail}" id="image"></div>
+
+                <p class="detail">Name: <span>${data.results[0].name.title} ${data.results[0].name.first} ${data.results[0].name.last}<span></p>
+                <p class="detail">Gender: <span>${data.results[0].gender}</span></p>
+                <p class="detail">Username: <span>${data.results[0].login.username}</span></p>
+                <p class="detail">Email: <span>${data.results[0].email}</span></p>
+                <p class="detail">Age: <span>${data.results[0].dob.age}</span></p>
+                <p class="detail"> Country: <span>${data.results[0].location.country}</span></p>
+                    `
+                })
+        })
+    </script>
+</body>
+
+</html>

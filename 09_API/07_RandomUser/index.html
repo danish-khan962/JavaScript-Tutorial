@@ -103,11 +103,11 @@
     </div>
 
     <script>
-        let button = document.getElementById('button');
+        let Generatebutton = document.getElementById('button');
         const url = "https://randomuser.me/api/";
         let result = document.querySelector('.result');
 
-        button.addEventListener("click",()=>{
+         Generatebutton.addEventListener("click",()=>{
             fetch(url)
                 .then(response => response.json())
                 .then(data => {

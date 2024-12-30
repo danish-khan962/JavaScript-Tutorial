@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        html, body{
+            height: 100vh;
+            width: 100vw;
+        }
+        .wrapper{
+            background: linear-gradient(#41295a,#2F0743);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .pokemonCard{
+            background-color: #fff;
+            max-width: 400px;
+            width: 100%;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+        .searchBar{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .searchBar > i{
+            font-size: 21px;
+        }
+        #inp{
+            border: none;
+            outline: none;
+            font-size: 22px;
+            text-transform: uppercase;
+            width: 75%;
+        }
+        #inp::placeholder{
+            font-size: 19px;
+            text-transform: capitalize;
+        }
+        #searchButton{
+            background-color: #a8f2ff;
+            padding: 0.5rem;
+            border-radius: 20px;
+        }
+        #searchButton:hover{
+            background-color: #000;
+            color: #fff;
+        }
+        .img-div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        #pokemonImage{
+            height: 15rem;
+        }
+        .name-div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #pokemonName{
+            text-align: center;
+            padding: 1rem 2.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            text-transform: uppercase;
+            background-color: #312e2e;
+            color: #fff;
+        }
+        #stats{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .abilities{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #statsNumber{
+            font-size: 26px;
+            font-weight: 600;
+        }
+        #statsTitle{
+            font-size: 19px;
+            font-weight: 500;
+        }
+        .type{
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        #type{
+            font-size: 20px;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 15px;
+            background-color: #000;
+            color: #fff;
+        }
+        #error{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            gap: 1.5rem;
+        }
+        #error img{
+            width: 70%;
+            animation: rotateBall 2s ease infinite;
+        }
+        @keyframes rotateBall{
+            from{
+                rotate: 0deg;
+            }
+            to{
+                rotate: 360deg;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="pokemonCard">
+            <div class="searchBar">
+                <i class="fa-solid fa-paw fa-shake"></i>
+                <input type="text" placeholder="Search Pokemon" id="inp">
+                <i class="fa-solid fa-magnifying-glass" id="searchButton"></i>
+            </div>
+
+            <div class="results"></div>
+        </div>
+    </div>
+
+    <script>
+        let url = " https://pokeapi.co/api/v2/pokemon/";
+        let searchButton = document.getElementById('searchButton');
+        let pokemonName = document.getElementById('pokemonName');
+        let result = document.querySelector('.results');
+        
+        searchButton.addEventListener("click",()=>{
+            let input = document.getElementById('inp').value;
+
+            const finalURL = `${url}${input}`;
+            console.log(finalURL);
+
+            fetch(finalURL)
+            .then(response => response.json())
+            .then(data=>{
+                console.log(data);
+                result.innerHTML = `
+                <div class="img-div">
+                    <img src="${data.sprites.front_default}" id="pokemonImage">
+                </div>
+                <div class="name-div">
+                    <h2 id="pokemonName">${input}</h2>
+                </div>
+                <div id="stats">
+                    <div class="abilities">
+                        <p id="statsNumber">${data.stats[1].base_stat}</p>
+                        <p id="statsTitle">Attack</p>
+                    </div>
+                    <div class="abilities">
+                        <p id="statsNumber">${data.stats[2].base_stat}</p>
+                        <p id="statsTitle">Defense</p>
+                    </div>
+                    <div class="abilities">
+                        <p id="statsNumber">${data.stats[5].base_stat}</p>
+                        <p id="statsTitle">Speed</p>
+                    </div>
+                </div>
+                <div class="type">
+                    <p id="type">${data.types[0].type.name}</p>
+                    ${data.types[1] ? `<p id="type">${data.types[1].type.name}</p>` : ""}
+                </div>
+                `;
+            })
+            .catch(error=>{
+                result.innerHTML = `
+                <div id="error">
+                    <img src="pokeball.png">
+                    <p>Oops! No such pokemon found .. Sorry :/ </p>
+                </div>
+                `
+            })
+
+        })
+    </script>
+</body>
+</html>

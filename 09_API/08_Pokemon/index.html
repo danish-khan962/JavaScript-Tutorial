@@ -166,7 +166,7 @@
         let result = document.querySelector('.results');
         
         searchButton.addEventListener("click",()=>{
-            let input = document.getElementById('inp').value;
+            let input = document.getElementById('inp').value.toLowerCase();
 
             const finalURL = `${url}${input}`;
             console.log(finalURL);
